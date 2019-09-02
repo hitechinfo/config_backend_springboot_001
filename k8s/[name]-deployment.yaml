@@ -1,0 +1,29 @@
+apiVersion: apps/v1beta1 
+kind: Deployment 
+metadata: 
+  name: [name]-deployment
+  namespace: submodule-template  
+  labels: 
+    app: [name]
+spec: 
+  replicas: 1
+  minReadySeconds: 10 
+  strategy: 
+    type: RollingUpdate 
+    rollingUpdate: 
+      maxSurge: 1 
+      maxUnavailable: 0 
+  selector: 
+    matchLabels: 
+      app: [name] 
+  template: 
+    metadata:  
+      labels: 
+        app: [name] 
+    spec: 
+      containers: 
+      - name: [name]
+        image: mgmtsv-registry.cloudzcp.io/template/[image_name]:1
+        ports:  
+        - containerPort: 3005 
+        imagePullPolicy: Always
